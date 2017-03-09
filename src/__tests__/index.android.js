@@ -6,7 +6,5 @@ import NewBornNamer from '../NewBornNamer';
 import renderer from 'react-test-renderer';
 
 it('renders correctly', () => {
-  const tree = renderer.create(
-    <NewBornNamer />
-  );
+  const tree = renderer.create(<NewBornNamer />);
 });
