@@ -91,11 +91,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     backgroundColor: 'lightpink',
+    paddingTop: 40,
+    paddingBottom: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   title: {
     fontSize: 24,
     textAlign: 'center',
-    margin: 40,
     color: '#fc0064',
   },
   names: {
@@ -103,9 +106,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-around',
     alignItems: 'stretch',
-  },
-  done: {
-    fontSize: 50,
   },
 });
 
