@@ -11,7 +11,8 @@
 		"flow-bin": "0.37.0",
 		"lodash": "^4.17.4",
 		"react": "~15.4.0",
-		"react-native": "0.41.2"
+		"react-native": "0.41.2",
+		"react-navigation": "^1.0.0-beta.6"
 	},
 	"devDependencies": {
 		"babel-jest": "19.0.0",

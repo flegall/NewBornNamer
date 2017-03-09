@@ -15,9 +15,18 @@ import {
   View,
 } from 'react-native';
 
+import { StackNavigator } from 'react-navigation';
+
 import FIRST_NAMES from './FirstNames';
 
-export default class NewBornNamer extends Component {
+export default class HomeScreen extends Component {
+  static navigationOptions = {
+    title: 'Pick up a baby name...',
+    header: {
+      tintColor: '#fc0064',
+    },
+  };
+
   state: {
     choiceA: string,
     choiceB: string,
@@ -49,17 +58,18 @@ export default class NewBornNamer extends Component {
     });
   }
 
-  done = () => {};
+  done = () => {
+    const { navigate } = this.props.navigation;
+    const { votes } = this.state;
+
+    navigate('Results', { votes });
+  };
 
   render() {
     const { choiceA, choiceB } = this.state;
 
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>
-          Pick up a baby name...
-        </Text>
-
         <View style={styles.names}>
           <Button
             onPress={this.chooseA}
@@ -79,6 +89,32 @@ export default class NewBornNamer extends Component {
           title="Show my favorite !"
           color="#4b00fc"
         />
+      </View>
+    );
+  }
+}
+
+class ResultsScreen extends Component {
+  static navigationOptions = {
+    title: 'And the winner is ...',
+    header: {
+      tintColor: '#fc0064',
+    },
+  };
+
+  render() {
+    const votes: {
+      [fistName: string]: number,
+    } = this.props.navigation.state.params.votes;
+
+    const pairs = _.toPairs(votes);
+    const [name, vote] = pairs.reduce(([aName, aVote], [bName, bVote]) => {
+      return aVote >= bVote ? [aName, aVote] : [bName, bVote];
+    });
+
+    return (
+      <View style={styles.container}>
+        <Text>{name} !!</Text>
       </View>
     );
   }
@@ -107,6 +143,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'stretch',
   },
+});
+
+const NewBornNamer = StackNavigator({
+  Home: { screen: HomeScreen },
+  Results: { screen: ResultsScreen },
 });
 
 AppRegistry.registerComponent('NewBornNamer', () => NewBornNamer);
