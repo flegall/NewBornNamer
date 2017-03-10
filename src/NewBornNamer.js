@@ -19,7 +19,7 @@ import { StackNavigator } from 'react-navigation';
 
 import FIRST_NAMES from './FirstNames';
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Pick up a baby name...',
     header: {
@@ -95,6 +95,15 @@ export default class HomeScreen extends Component {
 }
 
 class ResultsScreen extends Component {
+  props: {
+    navigation: {
+      state: {
+        params: {
+          votes: { [firstName: string]: number },
+        },
+      },
+    },
+  };
   static navigationOptions = {
     title: 'And the winner is ...',
     header: {
@@ -103,18 +112,17 @@ class ResultsScreen extends Component {
   };
 
   render() {
-    const votes: {
-      [fistName: string]: number,
-    } = this.props.navigation.state.params.votes;
+    const votes = this.props.navigation.state.params.votes;
 
-    const pairs = _.toPairs(votes);
-    const [name, vote] = pairs.reduce(([aName, aVote], [bName, bVote]) => {
-      return aVote >= bVote ? [aName, aVote] : [bName, bVote];
+    const firstNames = _.keys(votes);
+
+    const name = firstNames.reduce((aName, bName) => {
+      return votes[aName] >= votes[bName] ? aName : bName;
     });
 
     return (
       <View style={styles.container}>
-        <Text>{name} !!</Text>
+        <Text style={styles.result}>{name} with {votes[name]} votes!!</Text>
       </View>
     );
   }
@@ -143,6 +151,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'stretch',
   },
+  result: {
+    fontSize: 24,
+    textAlign: 'center',
+    color: '#841584',
+    fontWeight: 'bold',
+  }
 });
 
 const NewBornNamer = StackNavigator({
@@ -151,3 +165,5 @@ const NewBornNamer = StackNavigator({
 });
 
 AppRegistry.registerComponent('NewBornNamer', () => NewBornNamer);
+
+export default NewBornNamer;
