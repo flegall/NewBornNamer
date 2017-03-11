@@ -1,7 +1,7 @@
 Prérequis : 
-Node 6
-react-native-cli installé en global
-flow-typed installé en global
+- Node 6
+- react-native-cli installé en global
+- flow-typed installé en global
 
 - Bootstrap du projet
   - react-native init NewBornNamer
