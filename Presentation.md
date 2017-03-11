@@ -9,7 +9,7 @@ Prérequis :
   - react-native run-ios
 
 - Add flow
-  - yarn add -D flow-bin (permet d'utiliser flow dans nuclide)
+  - yarn add -D flow-bin@0.38.0 (permet d'utiliser flow dans nuclide et d'utiliser la version de flow spécifiée)
   - flow-typed (permet de télécharger les définitions flow)
   - Ajouter scripts : "flow": "flow"
   - Lancer "flow" pour tester
