@@ -1,21 +1,27 @@
+Prérequis : 
+Node 6
+react-native-cli installé en global
+flow-typed installé en global
+
 - Bootstrap du projet
-  - react-native init
+  - react-native init NewBornNamer
+  - cd NewBornNamer
   - react-native run-ios
 
 - Add flow
-  - Annotation
-  - yarn install flow-bin
-  - yarn install flow-typed
-  - flow-typed
-  - Ajouter scripts/flow
+  - yarn add -D flow-bin (permet d'utiliser flow dans nuclide)
+  - flow-typed (permet de télécharger les définitions flow)
+  - Ajouter scripts : "flow": "flow"
+  - Lancer "flow" pour tester
 
 - Transformer l'appli blanche en première page (sans les interactions ni la navigation)
+  - Déplacer le code dans un fichier (src/NewBornNamer)
   - Mise en place du layout
   - Mise en place du styling
 
 - Mise en place de la logique
   - Ajouter le state
-  - Ajouter l'état initial
+  - Ajouter l'état initial (Ajouter la liste des prénoms)
   - Ajouter les listeners
   - Ajouter alert box, log ou debugguer
 
