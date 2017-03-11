@@ -4,7 +4,7 @@ Prérequis :
 - flow-typed installé en global
 
 
-
+Steps :
 - Bootstrap du projet
   - react-native init NewBornNamer
   - cd NewBornNamer
