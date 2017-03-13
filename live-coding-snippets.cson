@@ -1,0 +1,222 @@
+# Your snippets
+#
+# Atom snippets allow you to enter a simple prefix in the editor and hit tab to
+# expand the prefix into a larger code block with templated values.
+#
+# You can create a new snippet in this file by typing "snip" and then hitting
+# tab.
+#
+# An example CoffeeScript snippet to expand log to console.log:
+#
+# '.source.coffee':
+#   'Console log':
+#     'prefix': 'log'
+#     'body': 'console.log $1'
+#
+# Each scope (e.g. '.source.coffee' above) can only be declared once.
+#
+# This file uses CoffeeScript Object Notation (CSON).
+# If you are unfamiliar with CSON, you can read more about it in the
+# Atom Flight Manual:
+# https://atom.io/docs/latest/using-atom-basic-customization#cson
+
+'.source.js':
+ 'requireNewBornNamer':
+   'prefix': 'requireNewBornNamer'
+   'body': """// @flow
+   require('./src/NewBornNamer');"""
+
+ 'threeButtons':
+   'prefix': 'threeButtons'
+   'body': """        <Button
+             title="It's Mary !"
+           />
+           <Button
+             title="It's Lisa !"
+           />
+           <Button
+             title="Show my Favorite !"
+           />"""
+
+ 'onPressAlert':
+   'prefix': 'onPressAlert'
+   'body': """onPress={() => Alert.alert('$1')}"""
+
+ 'space-between':
+   'prefix': 'space-between'
+   'body': """space-between"""
+
+ 'paddingTopAndBottom':
+   'prefix': 'paddingTopAndBottom'
+   'body': """    paddingTop: 40,
+    paddingBottom: 20,"""
+
+ 'lightpink':
+   'prefix': 'lightpink'
+   'body': """lightpink"""
+
+ 'colorDarkViolet':
+   'prefix': 'colorDarkViolet'
+   'body': """color='darkviolet'"""
+
+ 'state':
+   'prefix': 'state'
+   'body': """  state: {
+     choiceA: string,
+     choiceB: string,
+     votes: { [firstName: string]: number },
+   }"""
+
+ 'titleFirstname':
+   'prefix': 'titleFirstname'
+   'body': """{`It's ${$1} !`}"""
+
+ 'firstNames':
+   'prefix': 'firstNames'
+   'body': """const firstNames = [
+   'Mary',
+   'Lisa',
+   'Barbara',
+   'Jennifer',
+   'Sharon',
+ ];"""
+
+ 'initialState':
+   'prefix': 'initialState'
+   'body': """ = {
+    choiceA: firstNames[0],
+    choiceB: firstNames[1],
+    votes: {},
+   }"""
+
+ 'listeners':
+   'prefix': 'listeners'
+   'body': """  chooseA = () => {
+     this.choose(this.state.choiceA);
+   }
+
+   chooseB = () => {
+     this.choose(this.state.choiceB);
+   }
+
+   choose(choice: string) {
+     const { votes } = this.state;
+     const currentVoteForTheChoice = votes[choice] ? votes[choice] : 0;
+     this.setState({
+       votes: { ...votes, [choice]: currentVoteForTheChoice + 1 },
+     });
+   }"""
+
+ 'stringifyVotes':
+   'prefix': 'stringifyVotes'
+   'body': """{() => Alert.alert(JSON.stringify(this.state.votes))}"""
+
+ 'shuffleFirstnames':
+   'prefix': 'shuffleFirstnames'
+   'body': """const [choiceA, choiceB] = _.shuffle(firstNames);"""
+
+ 'newFirstnames':
+   'prefix': 'newFirstnames'
+   'body': """choiceA,
+      choiceB,"""
+
+ 'lodashImport':
+   'prefix': 'lodashImport'
+   'body': """import _ from 'lodash';"""
+
+ 'stackNavigator':
+   'prefix': 'stackNavigator'
+   'body': """const NewBornNamer = StackNavigator({
+   Home: { screen: HomeScreen },
+ });
+
+ """
+
+ 'importStackNavigator':
+   'prefix': 'importStackNavigator'
+   'body': """import { StackNavigator } from 'react-navigation';"""
+
+ 'navigationOptions':
+   'prefix': 'navigationOptions'
+   'body': """static navigationOptions = {
+   title: 'Pick up a baby name...',
+   header: {
+     tintColor: 'deeppink',
+   },
+ };
+
+"""
+
+ 'ResultsScreen':
+   'prefix': 'ResultsScreen'
+   'body': """class ResultsScreen extends Component {
+   static navigationOptions = {
+     title: 'And the winner is ...',
+     header: {
+       tintColor: 'deeppink',
+     },
+   };
+
+   render() {
+     return (
+       <View style={styles.container}>
+         <Text>???</Text>
+       </View>
+     );
+   }
+  }
+"""
+
+ 'routeResults':
+   'prefix': 'routeResults'
+   'body': """Results: { screen: ResultsScreen},"""
+
+ 'doneListener':
+   'prefix': 'doneListener'
+   'body': """  done = () => {
+   const { navigate } = this.props.navigation;
+   const { votes } = this.state;
+
+   navigate('Results', { votes });
+ };
+
+"""
+
+ 'propsResultsScreen':
+   'prefix': 'propsResultsScreen'
+   'body': """props: {
+   navigation: {
+     state: {
+       params: {
+         votes: { [firstName: string]: number },
+       },
+     },
+   },
+ };
+
+"""
+
+ 'renderResultsScreen':
+   'prefix': 'renderResultsScreen'
+   'body': """    const votes = this.props.navigation.state.params.votes;
+
+    const firstNames = _.keys(votes);
+
+    const name = firstNames.reduce((aName, bName) => {
+      return votes[aName] >= votes[bName] ? aName : bName;
+    });
+
+    return (
+      <View style={styles.container}>
+        <Text style={styles.result}>{name} with {votes[name]} votes!!</Text>
+      </View>
+    );
+"""
+
+ 'styleResult':
+   'prefix': 'styleResult'
+   'body': """result: {
+   fontSize: 24,
+   color: 'darkviolet',
+   fontWeight: 'bold',
+ },"""

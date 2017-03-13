@@ -1,0 +1,9 @@
+- Prerequisites
+  - Node 6 & up: the recommended way is to use [nvm](https://github.com/creationix/nvm#install-script)
+  - yarn: the recommended way is to use the [installation script](https://yarnpkg.com/en/docs/install#alternatives-tab)
+  - watchman: brew install watchman
+  - Xcode 8 & up: the easiest way to install it is via the [Mac App Store](https://itunes.apple.com/us/app/xcode/id497799835?mt=12).
+- Run the app on the iOS simulator
+  - yarn install
+  - npm install -g react-native-cli
+  - react-native run-ios
