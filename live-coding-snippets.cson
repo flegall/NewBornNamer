@@ -61,11 +61,7 @@
 
  'state':
    'prefix': 'state'
-   'body': """  state: {
-     choiceA: string,
-     choiceB: string,
-     votes: { [firstName: string]: number },
-   }"""
+   'body': """state = {};"""
 
  'titleFirstname':
    'prefix': 'titleFirstname'
@@ -83,29 +79,23 @@
 
  'initialState':
    'prefix': 'initialState'
-   'body': """ = {
+   'body': """{
     choiceA: firstNames[0],
     choiceB: firstNames[1],
     votes: {},
    }"""
 
- 'listeners':
-   'prefix': 'listeners'
-   'body': """  chooseA = () => {
-     this.choose(this.state.choiceA);
-   }
-
-   chooseB = () => {
-     this.choose(this.state.choiceB);
-   }
-
-   choose(choice: string) {
-     const { votes } = this.state;
-     const currentVoteForTheChoice = votes[choice] ? votes[choice] : 0;
-     this.setState({
+ 'listener':
+   'prefix': 'listener'
+   'body': """choose(choice: string) {
+   this.setState((state) => {
+     const { votes } = state;
+     const currentVoteForTheChoice = votes[choice] || 0;
+     return {
        votes: { ...votes, [choice]: currentVoteForTheChoice + 1 },
-     });
-   }"""
+     };
+   });
+ }"""
 
  'stringifyVotes':
    'prefix': 'stringifyVotes'
@@ -173,12 +163,12 @@
 
  'doneListener':
    'prefix': 'doneListener'
-   'body': """  done = () => {
-   const { navigate } = this.props.navigation;
-   const { votes } = this.state;
+   'body': """done() {
+    const { navigate } = this.props.navigation;
+    const { votes } = this.state;
 
-   navigate('Results', { votes });
- };
+    navigate('Results', { votes });
+  };
 
 """
 
