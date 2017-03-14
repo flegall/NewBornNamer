@@ -140,20 +140,20 @@
  'ResultsScreen':
    'prefix': 'ResultsScreen'
    'body': """class ResultsScreen extends Component {
-   static navigationOptions = {
-     title: 'And the winner is ...',
-     header: {
-       tintColor: 'deeppink',
-     },
-   };
+    static navigationOptions = {
+      title: 'And the winner is ...',
+      header: {
+        tintColor: 'deeppink',
+      },
+    };
 
-   render() {
-     return (
-       <View style={styles.container}>
-         <Text>???</Text>
-       </View>
-     );
-   }
+    render() {
+      return (
+        <View style={styles.container}>
+          <Text>???</Text>
+        </View>
+      );
+    }
   }
 """
 
@@ -172,35 +172,23 @@
 
 """
 
- 'propsResultsScreen':
-   'prefix': 'propsResultsScreen'
-   'body': """props: {
-   navigation: {
-     state: {
-       params: {
-         votes: { [firstName: string]: number },
-       },
-     },
-   },
- };
+  'renderResultsScreen':
+    'prefix': 'renderResultsScreen'
+    'body': """    const votes = this.props.navigation.state.params.votes;
 
-"""
+        const firstNames = _.keys(votes);
+        const name = firstNames.length > 0 ? firstNames.reduce((aName, bName) => {
+          return votes[aName] >= votes[bName] ? aName : bName;
+        }) : null;
 
- 'renderResultsScreen':
-   'prefix': 'renderResultsScreen'
-   'body': """    const votes = this.props.navigation.state.params.votes;
-
-    const firstNames = _.keys(votes);
-
-    const name = firstNames.reduce((aName, bName) => {
-      return votes[aName] >= votes[bName] ? aName : bName;
-    });
-
-    return (
-      <View style={styles.container}>
-        <Text style={styles.result}>{name} with {votes[name]} votes!!</Text>
-      </View>
-    );
+        return (
+          <View style={styles.container}>
+            {name ?
+              <Text style={styles.result}>{name} with {votes[name]} votes!!</Text> :
+              <Text style={styles.result}>No votes so far !</Text>
+            }
+          </View>
+        );
 """
 
  'styleResult':
