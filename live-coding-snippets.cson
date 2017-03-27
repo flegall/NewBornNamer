@@ -197,4 +197,5 @@
    fontSize: 24,
    color: 'darkviolet',
    fontWeight: 'bold',
+   alignSelf: 'center',
  },"""
