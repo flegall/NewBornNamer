@@ -176,15 +176,14 @@
     'prefix': 'renderResultsScreen'
     'body': """    const votes = this.props.navigation.state.params.votes;
 
-        const firstNames = _.keys(votes);
-        const name = firstNames.length > 0 ? firstNames.reduce((aName, bName) => {
-          return votes[aName] >= votes[bName] ? aName : bName;
-        }) : null;
+        const [name, votesCount] = _(votes)
+          .toPairs()
+          .maxBy(([name, votesCount]) => votesCount) || [];
 
         return (
           <View style={styles.container}>
             {name ?
-              <Text style={styles.result}>{name} with {votes[name]} votes!!</Text> :
+              <Text style={styles.result}>{name} with {votesCount} votes!!</Text> :
               <Text style={styles.result}>No votes so far !</Text>
             }
           </View>
