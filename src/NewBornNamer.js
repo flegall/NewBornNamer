@@ -3,62 +3,54 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-import _ from 'lodash';
 
+import _ from 'lodash';
 import React, { Component } from 'react';
 import {
+  Alert,
   AppRegistry,
   Button,
   StyleSheet,
   Text,
-  TouchableHighlight,
-  View,
+  View
 } from 'react-native';
-
 import { StackNavigator } from 'react-navigation';
 
-import FIRST_NAMES from './FirstNames';
+const firstNames = [
+  'Mary',
+  'Lisa',
+  'Barbara',
+  'Jennifer',
+  'Sharon',
+];
 
 class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Pick up a baby name...',
     header: {
-      tintColor: '#fc0064',
+      tintColor: 'deeppink',
     },
   };
 
-  state: {
-    choiceA: string,
-    choiceB: string,
-    votes: { [firstName: string]: number },
-  } = {
-    choiceA: FIRST_NAMES[0],
-    choiceB: FIRST_NAMES[1],
-    votes: FIRST_NAMES.reduce(
-      (votes, firstName) => ({ ...votes, [firstName]: 0 }),
-      {},
-    ),
-  };
-
-  chooseA = () => {
-    this.choose(this.state.choiceA);
-  };
-
-  chooseB = () => {
-    this.choose(this.state.choiceB);
+  state = {
+    choiceA: firstNames[0],
+    choiceB: firstNames[1],
+    votes: {},
   };
 
   choose(choice: string) {
-    const { votes } = this.state;
-    const [choiceA, choiceB] = _.shuffle(FIRST_NAMES);
-    this.setState({
-      votes: { ...votes, [choice]: votes[choice] + 1 },
-      choiceA,
-      choiceB,
+    this.setState((state) => {
+      const { votes } = state;
+      const currentVoteForTheChoice = votes[choice] || 0;
+      const [choiceA, choiceB] = _.shuffle(firstNames);
+      return {
+        votes: { ...votes, [choice]: currentVoteForTheChoice + 1 },
+        choiceA, choiceB,
+      };
     });
   }
 
-  done = () => {
+  done() {
     const { navigate } = this.props.navigation;
     const { votes } = this.state;
 
@@ -66,28 +58,22 @@ class HomeScreen extends Component {
   };
 
   render() {
-    const { choiceA, choiceB } = this.state;
-
     return (
       <View style={styles.container}>
-        <View style={styles.names}>
-          <Button
-            onPress={this.chooseA}
-            title={`It's ${choiceA} !`}
-            color="#841584"
-          />
-          <Button
-            onPress={this.chooseB}
-            title={`It's ${choiceB} !`}
-            color="#841584"
-          />
-        </View>
-
         <Button
-          styles={styles.done}
-          onPress={this.done}
-          title="Show my favorite !"
-          color="#4b00fc"
+          title={`It's ${this.state.choiceA} !`}
+          color='darkviolet'
+          onPress={() => this.choose(this.state.choiceA)}
+        />
+        <Button
+          title={`It's ${this.state.choiceB} !`}
+          color='darkviolet'
+          onPress={() => this.choose(this.state.choiceB)}
+        />
+        <Button
+          title="Show my Favorite !"
+          color='darkviolet'
+          onPress={() => this.done()}
         />
       </View>
     );
@@ -95,34 +81,26 @@ class HomeScreen extends Component {
 }
 
 class ResultsScreen extends Component {
-  props: {
-    navigation: {
-      state: {
-        params: {
-          votes: { [firstName: string]: number },
-        },
-      },
-    },
-  };
   static navigationOptions = {
     title: 'And the winner is ...',
     header: {
-      tintColor: '#fc0064',
+      tintColor: 'deeppink',
     },
   };
 
   render() {
     const votes = this.props.navigation.state.params.votes;
 
-    const firstNames = _.keys(votes);
-
-    const name = firstNames.reduce((aName, bName) => {
-      return votes[aName] >= votes[bName] ? aName : bName;
-    });
+    const [name, votesCount] = _(votes)
+      .toPairs()
+      .maxBy(([name, votesCount]) => votesCount) || [];
 
     return (
       <View style={styles.container}>
-        <Text style={styles.result}>{name} with {votes[name]} votes!!</Text>
+        {name ?
+          <Text style={styles.result}>{name} with {votesCount} votes!!</Text> :
+          <Text style={styles.result}>No votes so far !</Text>
+        }
       </View>
     );
   }
@@ -131,39 +109,24 @@ class ResultsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'stretch',
     backgroundColor: 'lightpink',
     paddingTop: 40,
     paddingBottom: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  title: {
-    fontSize: 24,
-    textAlign: 'center',
-    color: '#fc0064',
-  },
-  names: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'stretch',
   },
   result: {
     fontSize: 24,
-    textAlign: 'center',
-    color: '#841584',
+    color: 'darkviolet',
     fontWeight: 'bold',
-  }
+    alignSelf: 'center',
+  },
 });
 
 const NewBornNamer = StackNavigator({
   Home: { screen: HomeScreen },
-  Results: { screen: ResultsScreen },
+  Results: { screen: ResultsScreen},
 });
 
-AppRegistry.registerComponent('NewBornNamer', () => NewBornNamer);
 
-export default NewBornNamer;
+AppRegistry.registerComponent('NewBornNamer', () => NewBornNamer);
